@@ -166,7 +166,7 @@ function gotStream(stream) {
         audioPlayer.src = URL.createObjectURL(audioStream);
 
         audioPlayer.play();
-		
+
 		var singleAudioStream = getMixedAudioStream([stream, audioStream]);
 		singleAudioStream.addTrack(stream.getVideoTracks()[0]);
 		stream = singleAudioStream;
@@ -981,7 +981,19 @@ function captureTabUsingTabCapture(isNoAudio) {
                 googLeakyBucket: true,
                 googTemporalLayeredScreencast: true
             }
-        }
+        },
+        // TODO how to remove echo from audio?
+        // This appears to be a list of valid attributes:
+        // https://godoc.org/github.com/fd/webrtc#pkg-constants
+        // See also:
+        // https://w3c.github.io/mediacapture-main/getusermedia.html
+        //
+        // audioConstraints: {
+        //     mandatory: {
+        //         chromeMediaSource: 'tab',
+        //         googEchoCancellation: true,
+        //     }
+        // }
     };
 
     chrome.tabCapture.capture(constraints, function(stream) {
@@ -990,6 +1002,9 @@ function captureTabUsingTabCapture(isNoAudio) {
 }
 
 function gotTabCaptureStream(stream, constraints) {
+    var audio = new Audio(window.URL.createObjectURL(stream));
+    audio.play();
+
     if (!stream) {
         if (constraints.audio === true) {
             captureTabUsingTabCapture(true);
