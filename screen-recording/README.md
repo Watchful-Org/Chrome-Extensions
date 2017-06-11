@@ -1,3 +1,21 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents** 
+
+- [OnCamera docs](#oncamera-docs)
+  - [Setup](#setup)
+    - [AWS](#aws)
+    - [s3](#s3)
+  - [Usage](#usage)
+  - [Notes](#notes)
+- [Original docs](#original-docs)
+    - [Features](#features)
+      - [Note](#note)
+  - [Resolutions](#resolutions)
+  - [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # OnCamera docs
 
 ## Setup
