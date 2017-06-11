@@ -318,11 +318,11 @@ function stopScreenRecording() {
     isRecording = false;
 
     recorder.stopRecording(function() {
-        var Key = fileName + '.webm';
+        var Key = 'secret-ZemaNGv5633C4Krx/' + fileName + '.webm';
         var blob = recorder.getBlob();
         var upload = {
-            Bucket: 'oncamera-test',
-            Key: Key,
+            Bucket: 'oncamera-calls',
+            Key,
             Body: blob,
         }
 
@@ -1094,13 +1094,14 @@ function captureTabUsingTabCapture(isNoAudio = false, isTest = false) {
     // But `stream` will be null
     chrome.tabCapture.capture(constraints, function(stream) {
         if (isTest) {
+            console.log('capture', isTest, !! stream, runtimePort)
             if (stream) {
+                stream.stop();
                 runtimePort.postMessage({
                     OnCamera: true,
                     fromBackground: true,
                     captureIsWorking: true,
                 });
-                stream.stop();
             }
         } else {
             gotTabCaptureStream(stream, constraints);

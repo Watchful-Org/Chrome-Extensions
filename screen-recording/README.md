@@ -1,4 +1,70 @@
-# Record Screen - Chrome Extension
+# OnCamera docs
+
+## Setup
+
+### AWS
+
+Create a new AWS user:
+
+- in a group that has access to the right S3 bucket
+- with "Programmatic access"
+
+so that you have an `accessKeyId` and `secretAccessKey` to add to `background.js` in the call to `AWS.config.update`:
+
+https://console.aws.amazon.com/iam/home#/home
+
+### s3
+
+Create a bucket named `oncamera-calls` (or if another name, change the `Bucket` key in `background.js`).
+
+If you'd like to make the s3 folder publicly accessible, replace `ZemaNGv5633C4Krx` with another random string (because this repository is public on github).
+
+## Usage
+
+When a responder logs in, display a message that says, "Click the OC icon on the top-right of this browser", and do this:
+
+```
+const captureTestInterval = setInterval(function() {
+    window.postMessage(JSON.stringify({
+        type: 'is-capture-working'
+    }), '*');
+}, 100);
+
+window.addEventListener('message', function (event) {
+    if (event.data === 'capture-is-working') {
+        // take down the "click the icon" sign, and:
+        clearInterval(captureTestInterval);
+    }
+});
+```
+
+Then when a call starts, do:
+
+```
+window.postMessage(JSON.stringify({
+    type: 'start-recording',
+    fileName: 'foo'
+}), '*');
+```
+
+And when a call ends, do:
+
+```
+window.postMessage(JSON.stringify({
+    type: 'stop-recording',
+    fileName: 'foo'
+}), '*');
+```
+
+The fileName can be in either message.
+
+## Notes
+
+- After a call ends, refresh the page. (Multiple screen recordings in a row throw an error, haven't looked into why.)
+- The 'capture-is-working' response message from the extension works after the page load, but after a few minutes of idleness, if you send the 'is-capture-working' message again, the response doesn't come through. Couldn't immediately figure out why.
+- After a page refresh, the browser icon must be clicked again.
+
+# Original docs
 
 [RecordRTC](https://github.com/muaz-khan/RecordRTC) is used to record entire screen or record any application screen.
 
