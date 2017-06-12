@@ -254,7 +254,8 @@
                 break;
             case 'start-recording':
                 onMessage({
-                    OnCamera: true,
+                    // OnCamera: true,
+                    messageFromContentScript1234: true,
                     giveMeMicrophone: true,
                 });
 
@@ -269,8 +270,9 @@
                 break;
             case 'stop-recording':
                 onMessage({
-                    OnCamera: true,
+                    // OnCamera: true,
                     // stop: true,
+                    messageFromContentScript1234: true,
                     giveMeMicrophone: true,
                 });
                 // This isn't necessary. It's sent by the background script:
